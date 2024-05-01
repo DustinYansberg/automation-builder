@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/providers/theme-provider";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/providers/theme-provider";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedOut,
+  SignedIn,
+  UserButton,
+} from "@clerk/nextjs";
 
 const font = DM_Sans({ subsets: ["latin"] });
 
@@ -16,17 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={font.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider publishableKey="pk_test_cGxlYXNhbnQtbWFjYXF1ZS02OS5jbGVyay5hY2NvdW50cy5kZXYk">
+      <html lang="en">
+        <body className={font.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
